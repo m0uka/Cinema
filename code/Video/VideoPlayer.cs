@@ -30,10 +30,6 @@ namespace Cinema.Video
 		public VideoData VideoData { get; set; }
 		public VideoProgress VideoProgress { get; set; }
 
-		public float TexturePreloadInterval { get; set; } = 1f;
-
-		private TimeSince LastTexturePreload { get; set; }
-		
 		public double FrameLateDiff { get; set; }
 		public double FrameDesyncCorrectValue { get; set; }
 
@@ -87,8 +83,11 @@ namespace Cinema.Video
 			double realDuration = VideoData.FrameCount * frameRateFraction;
 			double realProgress = playbackProgress * realDuration;
 
+			double diff = Math.Abs(realProgress - PlaybackStart);
+			float multiplier = diff > 1 ? 10 : 1;
+
 			// We are running too slow or fast!
-			FrameDesyncCorrectValue = (realProgress - PlaybackStart);
+			FrameDesyncCorrectValue = (realProgress - PlaybackStart) * multiplier;
 		}
 
 		private void PlayFrame( int frame )

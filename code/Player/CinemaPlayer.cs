@@ -34,20 +34,38 @@ namespace Cinema.Player
 			base.Simulate( client );
 			
 
-			if ( IsServer && Input.Pressed( InputButton.Drop ) )
+			if ( IsClient && Input.Pressed( InputButton.Use ) )
 			{
-				
+				using ( Prediction.Off() )
+				{
+					var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 100000 )
+						.Radius( 5 )
+						.Ignore( this )
+						.UseHitboxes()
+						.Run();
+					
+					Log.Info( trace.Entity );
+					
+					if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
+					{
+						VideoRequestPanel.Instance.SetPlayer(tvEntity);
+						
+						return;
+					}
+
+				}
 			}
 
 			if ( IsServer && Input.Pressed( InputButton.Attack2 ) )
 			{
-				var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 1000 )
-					.Radius( 5 )
-					.Ignore( this )
-					.Run();
-
 				using ( Prediction.Off() )
 				{
+					var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 100000 )
+						.Radius( 5 )
+						.Ignore( this )
+						.UseHitboxes()
+						.Run();
+					
 					if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
 					{
 						if ( tvEntity.Player.IsPlaying )
@@ -66,11 +84,7 @@ namespace Cinema.Player
 					model.SetModel( "models/tv.vmdl" );
 					model.Position = trace.EndPos;
 					model.Spawn();
-					model.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
-
-					// Wait for receiver socket
-					await Task.Delay( 1000 );
-					model.RequestVideo( "https://www.youtube.com/watch?v=P_nj6wW6Gsc" );
+					model.SetupPhysicsFromModel( PhysicsMotionType.Invalid, false );
 				}
 			}
 		}

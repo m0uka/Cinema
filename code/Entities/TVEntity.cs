@@ -74,12 +74,12 @@ namespace Cinema.Entities
 			Log.Info( $"Playing the video! {id}" );
 			Receiver.JoinVideoStream( id );
 		}
-
+		
 		public void RequestVideo(string url)
 		{
 			Host.AssertServer();
 			
-			Log.Info( "Requested a video." );
+			Log.Info( $"Requested a video, URL: {url}" );
 			Receiver.RequestVideo(url);
 		}
 

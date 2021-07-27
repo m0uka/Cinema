@@ -13,5 +13,8 @@ namespace Cinema.Video
 		public string VideoSize { get; set; }
 		public string Eta { get; set; }
 		public string DownloadRate { get; set; }
+		
+		public bool IsProbing { get; set; }
+		public VideoInfoResult VideoInfo { get; set; }
 	}
 }

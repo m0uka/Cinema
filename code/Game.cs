@@ -1,3 +1,4 @@
+using Cinema.Entities;
 using Cinema.Player;
 using Cinema.UI;
 using Sandbox;
@@ -11,6 +12,16 @@ namespace Cinema
 			if ( IsServer )
 			{
 				_ = new CinemaHud();
+			}
+		}
+
+		[ServerCmd("request_video")]
+		public static void RequestVideo( int playable, string url )
+		{
+			var ent = FindByIndex( playable );
+			if ( ent != null && ent is TVEntity tvEntity )
+			{
+				tvEntity.RequestVideo(url);
 			}
 		}
 		

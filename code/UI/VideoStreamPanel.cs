@@ -51,8 +51,21 @@ namespace Cinema.UI
 				builder.AppendLine( "VIDEO PROGRESS:" );
 				builder.AppendLine( "------------------------------" );
 				
-				builder.AppendLine( $"Video title: {progress.VideoTitle ?? "Unknown"}" );
+				builder.AppendLine( $"Is probing: {progress.IsProbing}" );
 				builder.AppendLine( $"Is downloading: {progress.IsDownloading}" );
+
+				if ( !progress.IsProbing && progress.VideoInfo != null )
+				{
+					builder.AppendLine();
+					
+					builder.AppendLine( $"### VIDEO INFO ###" );
+					builder.AppendLine( $"Video title: {progress.VideoInfo.Title}" );
+					builder.AppendLine( $"Channel name: {progress.VideoInfo.ChannelTitle}" );
+					builder.AppendLine( $"Published at: {progress.VideoInfo.PublishedAt}" );
+					
+					builder.AppendLine();
+				}
+				
 				if ( progress.IsDownloading )
 				{
 					builder.AppendLine( $"Download status: {progress.DownloadText}" );
@@ -90,8 +103,7 @@ namespace Cinema.UI
 				builder.AppendLine( $"Frame load time: {FrameLoadTime}ms" );
 				builder.AppendLine( $"Frame late diff: {TimeSpan.FromSeconds(Player.FrameLateDiff).TotalMilliseconds}ms" );
 				builder.AppendLine( $"Playback time: {TimeSpan.FromSeconds(Player.PlaybackStart):mm\\:ss}/{TimeSpan.FromSeconds(videoData.DurationDouble):mm\\:ss}" );
-				builder.AppendLine( $"Throughput: {Receiver.Throughput.ToSize(IntExtensions.SizeUnits.MB)}mb/s" );
-				
+
 				//Throughput
 
 				double playbackProgress = (double) Player.CurrentFrame / videoData.FrameCount;
@@ -101,6 +113,7 @@ namespace Cinema.UI
 				double realProgress = playbackProgress * realDuration;
 
 				builder.AppendLine( $"Real playback time: {TimeSpan.FromSeconds( realProgress ):mm\\:ss}/{TimeSpan.FromSeconds(realDuration):mm\\:ss}" );
+				builder.AppendLine( $"Throughput: {Receiver.Throughput.ToSize(IntExtensions.SizeUnits.MB)}mb/s" );
 			}
 
 			DebugText.Text = builder.ToString();

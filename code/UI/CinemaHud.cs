@@ -11,6 +11,7 @@ namespace Cinema.UI
 			if ( !IsClient ) return;
 
 			RootPanel.AddChild<VideoStreamPanel>();
+			RootPanel.AddChild<VideoRequestPanel>();
 		}
 	}
 }
