@@ -28,6 +28,7 @@ namespace Cinema.Player
 			base.Respawn();
 		}
 		
+		public TVEntity SpawnedEntity { get; set; }
 
 		public override async void Simulate( Client client )
 		{
@@ -65,6 +66,12 @@ namespace Cinema.Player
 						.Ignore( this )
 						.UseHitboxes()
 						.Run();
+
+					if ( SpawnedEntity != null )
+					{
+						SpawnedEntity.Position = trace.EndPos;
+						return;
+					}
 					
 					if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
 					{
@@ -85,6 +92,11 @@ namespace Cinema.Player
 					model.Position = trace.EndPos;
 					model.Spawn();
 					model.SetupPhysicsFromModel( PhysicsMotionType.Invalid, false );
+
+					if ( SpawnedEntity == null )
+					{
+						SpawnedEntity = model;
+					}
 				}
 			}
 		}
