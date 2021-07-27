@@ -1,4 +1,6 @@
-﻿namespace Cinema.Video
+﻿using Sandbox;
+
+namespace Cinema.Video
 {
 	public interface IPlayable
 	{

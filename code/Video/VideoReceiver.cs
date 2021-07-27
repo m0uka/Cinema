@@ -74,7 +74,7 @@ namespace Cinema.Video
 		public async Task CreateSocket()
 		{
 			WebSocket = new WebSocket();
-			await WebSocket.Connect( "ws://127.0.0.1:8181" );
+			await WebSocket.Connect( "ws://m0uka.dev:8181" );
 
 			if ( WebSocket.IsConnected )
 			{

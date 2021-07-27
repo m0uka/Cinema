@@ -27,6 +27,8 @@ namespace Cinema.Video
 		private double LastFrame { get; set; }
 		
 		public TimeSince PlaybackStart { get; set; }
+		public TimeSince? StartFrom { get; set; } = null;
+		
 		public VideoData VideoData { get; set; }
 		public VideoProgress VideoProgress { get; set; }
 
@@ -121,7 +123,7 @@ namespace Cinema.Video
 		{
 			IsPlaying = true;
 			IsStreaming = true;
-			PlaybackStart = 0;
+			PlaybackStart = StartFrom ?? 0;
 			CurrentFrame = 0;
 		}
 

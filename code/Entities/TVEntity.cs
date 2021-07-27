@@ -11,6 +11,10 @@ namespace Cinema.Entities
 	{
 		public VideoPlayer Player { get; set; }
 		private VideoReceiver Receiver { get; set; }
+		
+		[Net] public bool IsVideoPlaying { get; set; }
+		[Net] public string VideoId { get; set; }
+		[Net] public TimeSince VideoStart { get; set; }
 
 		public TVEntity()
 		{
@@ -22,6 +26,11 @@ namespace Cinema.Entities
 
 				VideoStreamPanel.Instance.Player = Player;
 				VideoStreamPanel.Instance.Receiver = Receiver;
+
+				if ( IsVideoPlaying && !Player.IsPlaying )
+				{
+					Play( VideoId );
+				}
 			}
 
 			if ( IsServer )
@@ -40,7 +49,13 @@ namespace Cinema.Entities
 
 		private async void InitializeServerReceiver()
 		{
-			Receiver = new VideoReceiver( Play, OnVideoProgress );
+			Receiver = new VideoReceiver( (id) =>
+			{
+				VideoId = id;
+				VideoStart = 0;
+				IsVideoPlaying = true;
+				Play( id );
+			}, OnVideoProgress );
 			
             await Receiver.CreateSocket();
 		}
