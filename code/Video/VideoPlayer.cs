@@ -131,6 +131,7 @@ namespace Cinema.Video
 		public void Ready()
 		{
 			ReadyToStart = true;
+			Frames.Clear();
 		}
 
 		public void Stop()
