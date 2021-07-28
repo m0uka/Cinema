@@ -159,7 +159,7 @@ namespace Cinema.Video
 					
 					Log.Info( "Successfully joined, starting!" );
 					VideoPlayer.VideoData = video;
-					VideoPlayer.Play();
+					VideoPlayer.Ready();
 				}
 				
 				

@@ -23,6 +23,7 @@ namespace Cinema.Video
 
 		public bool IsPlaying { get; set; } = false;
 		public bool IsStreaming { get; set; } = false;
+		public bool ReadyToStart { get; set; } = false;
 		
 		private double LastFrame { get; set; }
 		
@@ -115,7 +116,7 @@ namespace Cinema.Video
 			// This is pretty expensive
 			var stream = new MemoryStream( data );
 			var texture = Sandbox.TextureLoader.Image.Load( stream );
-
+			
 			ActiveTexture = texture;
 		}
 
@@ -127,6 +128,11 @@ namespace Cinema.Video
 			CurrentFrame = 0;
 		}
 
+		public void Ready()
+		{
+			ReadyToStart = true;
+		}
+
 		public void Stop()
 		{
 			IsPlaying = false;
@@ -135,6 +141,12 @@ namespace Cinema.Video
 		public void AddFrame( byte[] frame )
 		{
 			Frames.Add( frame );
+			
+			if ( ReadyToStart )
+			{
+				Play();
+				ReadyToStart = false;
+			}
 		}
 	}
 }
