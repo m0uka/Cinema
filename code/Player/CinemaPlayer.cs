@@ -28,9 +28,8 @@ namespace Cinema.Player
 			base.Respawn();
 		}
 		
-		public TVEntity SpawnedEntity { get; set; }
 
-		public override async void Simulate( Client client )
+		public override void Simulate( Client client )
 		{
 			base.Simulate( client );
 			
@@ -39,66 +38,68 @@ namespace Cinema.Player
 			{
 				using ( Prediction.Off() )
 				{
-					var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 100000 )
-						.Radius( 5 )
-						.Ignore( this )
-						.UseHitboxes()
-						.Run();
+					VideoRequestPanel.Instance.SetPlayer();
 					
-					Log.Info( trace.Entity );
-					
-					if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
-					{
-						VideoRequestPanel.Instance.SetPlayer(tvEntity);
-						
-						return;
-					}
+					// var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 100000 )
+					// 	.Radius( 5 )
+					// 	.Ignore( this )
+					// 	.UseHitboxes()
+					// 	.Run();
+					//
+					// Log.Info( trace.Entity );
+					//
+					// if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
+					// {
+					// 	VideoRequestPanel.Instance.SetPlayer(tvEntity);
+					// 	
+					// 	return;
+					// }
 
 				}
 			}
 
-			if ( IsServer && Input.Pressed( InputButton.Attack2 ) )
-			{
-				using ( Prediction.Off() )
-				{
-					var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 100000 )
-						.Radius( 5 )
-						.Ignore( this )
-						.UseHitboxes()
-						.Run();
-
-					if ( SpawnedEntity != null )
-					{
-						SpawnedEntity.Position = trace.EndPos;
-						return;
-					}
-					
-					if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
-					{
-						if ( tvEntity.Player.IsPlaying )
-						{
-							tvEntity.Player.Stop();
-						}
-						else
-						{
-							tvEntity.Player.Play();
-						}
-						
-						return;
-					}
-					
-					var model = new TVEntity();
-					model.SetModel( "models/tv.vmdl" );
-					model.Position = trace.EndPos;
-					model.Spawn();
-					model.SetupPhysicsFromModel( PhysicsMotionType.Invalid, false );
-
-					if ( SpawnedEntity == null )
-					{
-						SpawnedEntity = model;
-					}
-				}
-			}
+			// if ( IsServer && Input.Pressed( InputButton.Attack2 ) )
+			// {
+			// 	using ( Prediction.Off() )
+			// 	{
+			// 		var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 100000 )
+			// 			.Radius( 5 )
+			// 			.Ignore( this )
+			// 			.UseHitboxes()
+			// 			.Run();
+			//
+			// 		if ( SpawnedEntity != null )
+			// 		{
+			// 			SpawnedEntity.Position = trace.EndPos;
+			// 			return;
+			// 		}
+			// 		
+			// 		if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
+			// 		{
+			// 			if ( tvEntity.Player.IsPlaying )
+			// 			{
+			// 				tvEntity.Player.Stop();
+			// 			}
+			// 			else
+			// 			{
+			// 				tvEntity.Player.Play();
+			// 			}
+			// 			
+			// 			return;
+			// 		}
+			// 		
+			// 		var model = new TVEntity();
+			// 		model.SetModel( "models/tv.vmdl" );
+			// 		model.Position = trace.EndPos;
+			// 		model.Spawn();
+			// 		model.SetupPhysicsFromModel( PhysicsMotionType.Invalid, false );
+			//
+			// 		if ( SpawnedEntity == null )
+			// 		{
+			// 			SpawnedEntity = model;
+			// 		}
+			// 	}
+			// }
 		}
 	}
 }

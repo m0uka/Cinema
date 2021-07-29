@@ -31,8 +31,8 @@ Layer0
 	//---- Texture Coordinates ----
 	g_nScaleTexCoordUByModelScaleAxis "0"
 	g_nScaleTexCoordVByModelScaleAxis "0"
-	g_vTexCoordOffset "[0.440 -0.316]"
-	g_vTexCoordScale "[2.667 3.947]"
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
 	g_vTexCoordScrollSpeed "[0.000 0.000]"
 
 	Attributes

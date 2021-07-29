@@ -1,0 +1,158 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "carpetfront.vmat"
+								to = "materials/basic/carpetblack.vmat"
+							},
+							{
+								from = "carpetinner.vmat"
+								to = "materials/basic/carpetred.vmat"
+							},
+							{
+								from = "carpetouter.vmat"
+								to = "materials/basic/floorfabric.vmat"
+							},
+							{
+								from = "seat.vmat"
+								to = "materials/basic/chair.vmat"
+							},
+							{
+								from = "popcorn.vmat"
+								to = "materials/basic/popcorn.vmat"
+							},
+							{
+								from = "cuplitter.vmat"
+								to = "materials/basic/soda.vmat"
+							},
+							{
+								from = "door.vmat"
+								to = "materials/basic/door.vmat"
+							},
+							{
+								from = "door2.vmat"
+								to = "materials/basic/door.vmat"
+							},
+							{
+								from = "speakers.vmat"
+								to = "materials/basic/loudspeaker.vmat"
+							},
+							{
+								from = "screen.vmat"
+								to = "materials/screen.vmat"
+							},
+							{
+								from = "material #127.vmat"
+								to = "materials/basic/popcornsingle.vmat"
+							},
+							{
+								from = "material #128.vmat"
+								to = "materials/basic/glasses.vmat"
+							},
+							{
+								from = "19 - default.vmat"
+								to = "materials/basic/rail.vmat"
+							},
+							{
+								from = "walllover.vmat"
+								to = "materials/basic/walldark.vmat"
+							},
+							{
+								from = "walltop.vmat"
+								to = "materials/basic/wall.vmat"
+							},
+							{
+								from = "screenouter.vmat"
+								to = "materials/basic/walldark.vmat"
+							},
+							{
+								from = "material.vmat"
+								to = "materials/decals/bloodstain_001.vmat"
+							},
+							{
+								from = "projector.vmat"
+								to = "materials/basic/walldark.vmat"
+							},
+							{
+								from = "material #129.vmat"
+								to = "materials/basic/ticket.vmat"
+							},
+							{
+								from = "misc.vmat"
+								to = "materials/basic/walldark.vmat"
+							},
+							{
+								from = "miscinner.vmat"
+								to = "materials/sprites/light_glow02_add_noz.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "materials/basic/carpetred.vmat"
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsMeshFile"
+						name = "CinemaCollision"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_prop = "default"
+						recenter_on_parent_bone = false
+						offset_origin = [ -130.0, -70.0, 42.0 ]
+						offset_angles = [ 0.0, 0.0, 0.0 ]
+						filename = "models/basic/cinemacollision.fbx"
+						import_scale = 0.9
+						maxMeshVertices = 0
+						qemError = 0.0
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						filename = "models/basic/Cinema.FBX"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 0.9
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+	}
+}

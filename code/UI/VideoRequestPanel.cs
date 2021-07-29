@@ -14,7 +14,6 @@ namespace Cinema.UI
 		public TextEntry UrlInput { get; set; }
 		public Button SubmitButton { get; set; }
 		
-		public TVEntity Playable { get; set; }
 
 		public VideoRequestPanel()
 		{
@@ -29,7 +28,7 @@ namespace Cinema.UI
 				Style.PointerEvents = "none";
 				Style.Dirty();
 
-				ConsoleSystem.Run( "request_video", Playable.NetworkIdent, UrlInput.Text );
+				ConsoleSystem.Run( "request_video", null, UrlInput.Text );
 			});
 			SubmitButton.AddClass( "button" );
 			
@@ -38,9 +37,8 @@ namespace Cinema.UI
 			Instance = this;
 		}
 
-		public void SetPlayer( TVEntity playable )
+		public void SetPlayer(  )
 		{
-			Playable = playable;
 			Style.Display = DisplayMode.Flex;
 			Style.PointerEvents = "all";
 			Style.Dirty();
