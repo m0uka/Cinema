@@ -11,6 +11,8 @@ namespace Cinema.Video
 {
 	public class VideoReceiver
 	{
+		public string WebsocketUri { get; } = "ws://127.0.0.1:8181";
+		
 		public Action<string[]> MessageReceived { get; set; }
 		public Action<string> StreamSuccess { get; set; }
 		public Action<string> VideoProgress { get; set; }
@@ -74,7 +76,17 @@ namespace Cinema.Video
 		public async Task CreateSocket()
 		{
 			WebSocket = new WebSocket();
-			await WebSocket.Connect( "ws://m0uka.dev:8181" );
+			(Game.Current as CinemaGame)?.WebSockets.Add( WebSocket );
+
+			try
+			{
+				await WebSocket.Connect( WebsocketUri );
+			}
+			catch ( Exception )
+			{
+				Log.Error( "Couldn't connect to Cinema Backend! Retrying connection in 5 seconds..." );
+				await RetryConnection();
+			}
 
 			if ( WebSocket.IsConnected )
 			{
@@ -82,7 +94,6 @@ namespace Cinema.Video
 			}
 			else
 			{
-				Log.Error( "Couldn't connect to Cinema Backend!" );
 				return;
 			}
 
@@ -120,6 +131,12 @@ namespace Cinema.Video
 				}
 				
 				CalculateThroughput( data.Length );
+			};
+
+			WebSocket.OnDisconnected += async (_, _1) =>
+			{
+				Log.Info( "Lost connection with the backend. Retrying connection in 5 seconds..." );
+				await RetryConnection();
 			};
 
 			WebSocket.OnMessageReceived += ( msg ) =>
@@ -164,6 +181,31 @@ namespace Cinema.Video
 				
 				
 			};
+		}
+
+		private async Task RetryConnection()
+		{
+			int retryNum = 1;
+
+			while ( !WebSocket.IsConnected )
+			{
+				await Task.Delay(5000);
+				
+				Log.Info($"Trying to reconnect to Cinema Backend... Attempt number {retryNum}");
+				try
+				{
+					WebSocket = new WebSocket();
+					await WebSocket.Connect( WebsocketUri );
+				}
+				catch ( Exception e )
+				{
+					// ignored
+				}
+
+				retryNum++;
+			}
+			
+			Log.Info("Successfully reconnected to Cinema Backend!");
 		}
 
 		/// <summary>

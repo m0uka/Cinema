@@ -9,6 +9,7 @@ namespace Cinema
 	public partial class CinemaGame : Sandbox.Game
 	{
 		public List<ScreenPlayer> ScreenPlayers { get; set; } = new ();
+		public List<WebSocket> WebSockets { get; set; } = new ();
 		
 		public CinemaGame()
 		{
@@ -53,7 +54,17 @@ namespace Cinema
 				Log.Error( "This map is not supported by Cinema! (NO SCREEN PLAYERS FOUND)" );
 			}
 		}
-		
+
+		public override void Shutdown()
+		{
+			foreach ( var websocket in WebSockets )
+			{
+				websocket.Dispose();
+			}
+			
+			base.Shutdown();
+		}
+
 		public override void ClientJoined( Client client )
 		{
 			base.ClientJoined( client );
