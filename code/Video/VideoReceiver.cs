@@ -11,7 +11,7 @@ namespace Cinema.Video
 {
 	public class VideoReceiver
 	{
-		public string WebsocketUri { get; } = "ws://127.0.0.1:8181";
+		public string WebsocketUri { get; } = "ws://m0uka.dev:8181";
 		
 		public Action<string[]> MessageReceived { get; set; }
 		public Action<string> StreamSuccess { get; set; }
