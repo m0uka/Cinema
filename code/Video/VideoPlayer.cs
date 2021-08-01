@@ -15,8 +15,10 @@ namespace Cinema.Video
 		public Action<Texture> OnFrameChange { get; set; }
 		
 		public Texture ActiveTexture { get; set; }
+		public Entity PlayerEntity { get; set; }
 		
 		private List<byte[]> Frames { get; set; } = new();
+
 		private Dictionary<int, Texture> TextureFrames { get; set; } = new();
 		
 		public int CurrentFrame { get; set; }
@@ -32,9 +34,21 @@ namespace Cinema.Video
 		
 		public VideoData VideoData { get; set; }
 		public VideoProgress VideoProgress { get; set; }
+		
+		public SoundStream SoundStream { get; set; }
 
 		public double FrameLateDiff { get; set; }
 		public double FrameDesyncCorrectValue { get; set; }
+
+		public VideoPlayer()
+		{
+			
+		}
+
+		public VideoPlayer( Entity playerEntity )
+		{
+			PlayerEntity = playerEntity;
+		}
 
 		public void Playback()
 		{
@@ -130,8 +144,24 @@ namespace Cinema.Video
 
 		public void Ready()
 		{
+			InitSoundStream();
+			
 			ReadyToStart = true;
 			Frames.Clear();
+		}
+
+		private void InitSoundStream()
+		{
+			if ( SoundStream.IsValid )
+			{
+				SoundStream.Stop();
+			}
+
+			var sound = Sound.FromEntity( "audiostream.default", Local.Pawn );
+			sound.SetVolume( 1 );
+			sound.SetPitch( 1f );
+				
+			SoundStream = sound.CreateStream(VideoData.SoundSampleRate, 1);
 		}
 
 		public void Stop()
@@ -148,6 +178,11 @@ namespace Cinema.Video
 				Play();
 				ReadyToStart = false;
 			}
+		}
+
+		public void AddSoundSample( short[] soundData )
+		{
+			SoundStream.WriteData( soundData );
 		}
 	}
 }

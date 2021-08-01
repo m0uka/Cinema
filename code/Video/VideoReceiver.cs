@@ -11,7 +11,7 @@ namespace Cinema.Video
 {
 	public class VideoReceiver
 	{
-		public string WebsocketUri { get; } = "ws://m0uka.dev:8181";
+		public string WebsocketUri { get; } = "ws://localhost:8181";
 		
 		public Action<string[]> MessageReceived { get; set; }
 		public Action<string> StreamSuccess { get; set; }
@@ -70,6 +70,18 @@ namespace Cinema.Video
 			}
 		}
 		
+		private short[] ConvertBitsToShorts(byte[] buffer)
+		{
+			List<short> samples = new List<short>();
+			for (int n = 0; n < buffer.Length; n+=2)
+			{
+				short sample = (short)(buffer[n] | buffer[n+1] << 8);
+				samples.Add( sample );
+			}
+
+			return samples.ToArray();
+		}
+		
 		/// <summary>
 		/// Inits a websocket connection
 		/// </summary>
@@ -99,6 +111,8 @@ namespace Cinema.Video
 
 			bool activeFragment = false;
 			List<byte[]> frameFragments = new List<byte[]>();
+			
+			
 			WebSocket.OnDataReceived += (data) =>
 			{
 				if ( activeFragment )
@@ -111,10 +125,11 @@ namespace Cinema.Video
 
 						VideoPlayer.AddFrame(fragment);
 						frameFragments.Clear();
-						return;
 					}
-					
-					frameFragments.Add( data.ToArray() );
+					else
+					{
+						frameFragments.Add( data.ToArray() );
+					}
 				}
 				else
 				{
@@ -127,6 +142,11 @@ namespace Cinema.Video
 					{
 						// start of fragment
 						activeFragment = true;
+					} else if ( data.Length > 0 && data[0] == 0x01 )
+					{
+						// sound frame!
+						short[] shorts = ConvertBitsToShorts( data.Slice( 1 ).ToArray() );
+						VideoPlayer.AddSoundSample( shorts );
 					}
 				}
 				

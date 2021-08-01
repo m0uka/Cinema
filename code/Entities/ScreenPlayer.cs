@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using Cinema.UI;
 using Cinema.Video;
@@ -42,11 +44,11 @@ namespace Cinema.Entities
 
 		private async void InitializePlayer()
 		{
-			Player = new VideoPlayer();
+			Player = new VideoPlayer( this );
 
 			await Task.Delay( 1000 );
 			SceneObject.SetValue("tint", Color.White);
-			
+
 			VideoStreamPanel.Instance.Player = Player;
 			VideoStreamPanel.Instance.Receiver = Receiver;
 		}

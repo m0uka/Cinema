@@ -1,34 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj": {}
+    "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj": {}
   },
   "projects": {
-    "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj": {
+    "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj",
+        "projectUniqueName": "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj",
         "projectName": "base",
-        "projectPath": "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj",
-        "packagesPath": "C:\\Users\\Lukas\\.nuget\\packages\\",
-        "outputPath": "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\obj\\",
+        "projectPath": "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj",
+        "packagesPath": "C:\\Users\\m0uka\\.nuget\\packages\\",
+        "outputPath": "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Lukas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\m0uka\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net50"
+          "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp5.0": {
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {}
           }
         },
@@ -39,7 +37,8 @@
         }
       },
       "frameworks": {
-        "netcoreapp5.0": {
+        "net5.0": {
+          "targetAlias": "net5.0",
           "imports": [
             "net461",
             "net462",
@@ -55,38 +54,36 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj": {
+    "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj",
+        "projectUniqueName": "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj",
         "projectName": "cinema",
-        "projectPath": "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj",
-        "packagesPath": "C:\\Users\\Lukas\\.nuget\\packages\\",
-        "outputPath": "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\obj\\",
+        "projectPath": "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\cinema.csproj",
+        "packagesPath": "C:\\Users\\m0uka\\.nuget\\packages\\",
+        "outputPath": "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\cinema\\code\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Lukas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\m0uka\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net50"
+          "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp5.0": {
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj": {
-                "projectPath": "C:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj"
+              "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj": {
+                "projectPath": "D:\\SteamLibrary\\steamapps\\common\\sbox\\Addons\\base\\code\\base.csproj"
               }
             }
           }
@@ -98,7 +95,8 @@
         }
       },
       "frameworks": {
-        "netcoreapp5.0": {
+        "net5.0": {
+          "targetAlias": "net5.0",
           "imports": [
             "net461",
             "net462",
@@ -114,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
