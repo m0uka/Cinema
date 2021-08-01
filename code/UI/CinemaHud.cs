@@ -12,6 +12,7 @@ namespace Cinema.UI
 
 			RootPanel.AddChild<VideoStreamPanel>();
 			RootPanel.AddChild<VideoRequestPanel>();
+			RootPanel.AddChild<ChatBox>();
 		}
 	}
 }
