@@ -95,11 +95,12 @@ namespace Cinema.UI
 				builder.AppendLine( $"Current frame: {Player.CurrentFrame}" );
 				builder.AppendLine( $"Is playing: {Player.IsPlaying}" );
 				builder.AppendLine( $"Is streaming: {Player.IsStreaming}" );
+				builder.AppendLine( $"Is buffering: {Player.IsBuffering}" );
 				builder.AppendLine();
 				
 				builder.AppendLine( "--------STATS--------" );
 				
-				builder.AppendLine( $"Frames lead: {videoData.FrameCount - Player.CurrentFrame}" );
+				builder.AppendLine( $"Frames lead: {Player.LoadedFrameCount - Player.CurrentFrame}" );
 				builder.AppendLine( $"Frame load time: {FrameLoadTime}ms" );
 				builder.AppendLine( $"Frame late diff: {TimeSpan.FromSeconds(Player.FrameLateDiff).TotalMilliseconds}ms" );
 				builder.AppendLine( $"Playback time: {TimeSpan.FromSeconds(Player.PlaybackStart):mm\\:ss}/{TimeSpan.FromSeconds(videoData.DurationDouble):mm\\:ss}" );

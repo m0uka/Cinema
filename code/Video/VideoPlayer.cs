@@ -18,6 +18,7 @@ namespace Cinema.Video
 		public Entity PlayerEntity { get; set; }
 		
 		private List<byte[]> Frames { get; set; } = new();
+		public int LoadedFrameCount => Frames.Count;
 
 		private Dictionary<int, Texture> TextureFrames { get; set; } = new();
 		
@@ -25,6 +26,7 @@ namespace Cinema.Video
 
 		public bool IsPlaying { get; set; } = false;
 		public bool IsStreaming { get; set; } = false;
+		public bool IsBuffering { get; set; } = false;
 		public bool ReadyToStart { get; set; } = false;
 		
 		private double LastFrame { get; set; }
@@ -39,6 +41,9 @@ namespace Cinema.Video
 
 		public double FrameLateDiff { get; set; }
 		public double FrameDesyncCorrectValue { get; set; }
+		
+		private float BufferStart { get; set; }
+		private float TimeBuffering { get; set; }
 
 		public VideoPlayer()
 		{
@@ -65,10 +70,31 @@ namespace Cinema.Video
 			VideoStreamPanel.Instance.FrameLoadTime = (float) sw.Elapsed.TotalMilliseconds;
 		}
 
+		private async void Buffer(int time = 1)
+		{
+			if ( IsBuffering ) return;
+			
+			BufferStart = Time.Now;
+			IsBuffering = true;
+
+			await Task.Delay( time * 1000 );
+
+			EndBuffer();
+		}
+
+		private void EndBuffer()
+		{
+			IsBuffering = false;
+			TimeBuffering += (Time.Now - BufferStart);
+
+			// PlaybackStart -= (Time.Now - BufferStart);
+		}
+
 		public void UpdateFrames()
 		{
 			if ( !IsPlaying ) return;
 			if ( Frames.Count == 0 ) return;
+			if ( IsBuffering ) return;
 			
 			CorrectDesync();
 			
@@ -84,6 +110,7 @@ namespace Cinema.Video
 					IsPlaying = false;
 				}
 
+				// Buffer();
 				return;
 			}
 
@@ -96,7 +123,7 @@ namespace Cinema.Video
 		{
 			double playbackProgress = (double) CurrentFrame / VideoData.FrameCount;
 			double frameRateFraction = 1 / VideoData.FrameRate;
-				
+
 			double realDuration = VideoData.FrameCount * frameRateFraction;
 			double realProgress = playbackProgress * realDuration;
 
@@ -134,10 +161,11 @@ namespace Cinema.Video
 			ActiveTexture = texture;
 		}
 
-		public void Play()
+		public async void Play()
 		{
 			IsPlaying = true;
 			IsStreaming = true;
+
 			PlaybackStart = StartFrom ?? 0;
 			CurrentFrame = 0;
 		}

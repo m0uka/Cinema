@@ -3,6 +3,7 @@ using Cinema.Entities;
 using Cinema.Player;
 using Cinema.UI;
 using Sandbox;
+using Sandbox.UI;
 
 namespace Cinema
 {

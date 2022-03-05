@@ -6,6 +6,7 @@ using System.Text.Json;
 using Cinema.UI;
 using Cinema.Video;
 using Sandbox;
+using Sandbox.UI;
 
 namespace Cinema.Entities
 {
@@ -47,7 +48,7 @@ namespace Cinema.Entities
 			Player = new VideoPlayer( this );
 
 			await Task.Delay( 1000 );
-			SceneObject.SetValue("tint", Color.White);
+			SceneObject.Attributes.Set("tint", Color.White);
 
 			VideoStreamPanel.Instance.Player = Player;
 			VideoStreamPanel.Instance.Receiver = Receiver;
@@ -79,7 +80,7 @@ namespace Cinema.Entities
 			
 			if ( Player?.ActiveTexture != null )
 			{
-				SceneObject?.SetValue( "screen", Player.ActiveTexture );
+				SceneObject?.Attributes.Set( "screen", Player.ActiveTexture );
 			}
 		}
 

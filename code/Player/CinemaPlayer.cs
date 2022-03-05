@@ -18,7 +18,7 @@ namespace Cinema.Player
 			
 			Controller = new WalkController();
 			Animator = new StandardPlayerAnimator();
-			Camera = new FirstPersonCamera();
+			CameraMode = new FirstPersonCamera();
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -57,47 +57,13 @@ namespace Cinema.Player
 
 				}
 			}
-
-			// if ( IsServer && Input.Pressed( InputButton.Attack2 ) )
+			//
+			// if ( IsClient && Input.Pressed( InputButton.Attack2 ) )
 			// {
 			// 	using ( Prediction.Off() )
 			// 	{
-			// 		var trace = Trace.Ray( EyePos, EyePos + EyeRot.Forward * 100000 )
-			// 			.Radius( 5 )
-			// 			.Ignore( this )
-			// 			.UseHitboxes()
-			// 			.Run();
-			//
-			// 		if ( SpawnedEntity != null )
-			// 		{
-			// 			SpawnedEntity.Position = trace.EndPos;
-			// 			return;
-			// 		}
-			// 		
-			// 		if ( trace.Entity != null && trace.Entity is TVEntity tvEntity )
-			// 		{
-			// 			if ( tvEntity.Player.IsPlaying )
-			// 			{
-			// 				tvEntity.Player.Stop();
-			// 			}
-			// 			else
-			// 			{
-			// 				tvEntity.Player.Play();
-			// 			}
-			// 			
-			// 			return;
-			// 		}
-			// 		
-			// 		var model = new TVEntity();
-			// 		model.SetModel( "models/tv.vmdl" );
-			// 		model.Position = trace.EndPos;
-			// 		model.Spawn();
-			// 		model.SetupPhysicsFromModel( PhysicsMotionType.Invalid, false );
-			//
-			// 		if ( SpawnedEntity == null )
-			// 		{
-			// 			SpawnedEntity = model;
-			// 		}
+			// 		var panel = new ScreenWorldPanel();
+			// 		panel.Position = client.Pawn.Position;
 			// 	}
 			// }
 		}

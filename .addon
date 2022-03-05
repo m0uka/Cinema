@@ -1,3 +1,18 @@
 {
-	"sharedassets": "*.*"
+  "Title": "Cinema",
+  "Type": "game",
+  "Org": "cinema",
+  "Ident": "main",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": [
+    "/models/*",
+    "/materials/*",
+    "/textures/*",
+    "/code/UI"
+  ],
+  "HasCode": true,
+  "CodePath": "code",
+  "RootNamespace": "Cinema"
 }
