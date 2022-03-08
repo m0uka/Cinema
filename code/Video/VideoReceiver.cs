@@ -72,7 +72,7 @@ namespace Cinema.Video
 		
 		private short[] ConvertBitsToShorts(byte[] buffer)
 		{
-			List<short> samples = new List<short>();
+			List<short> samples = new List<short>(buffer.Length);
 			for (int n = 0; n < buffer.Length; n+=2)
 			{
 				short sample = (short)(buffer[n] | buffer[n+1] << 8);
