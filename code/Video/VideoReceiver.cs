@@ -54,6 +54,15 @@ namespace Cinema.Video
 			return output;
 		}
 
+		private void UpdateThroughput()
+		{
+			foreach ( var i in ThroughputData.Where( x => x.Key < DateTime.Now - TimeSpan.FromSeconds( 1 ) )
+				         .ToList() )
+			{
+				ThroughputData.Remove( i.Key );
+			}
+		}
+
 		private void CalculateThroughput(int length)
 		{
 			var now = DateTime.Now;
@@ -63,11 +72,6 @@ namespace Cinema.Video
 			}
 				
 			ThroughputData[now] = length;
-			foreach ( var i in ThroughputData.Where( x => x.Key < DateTime.Now - TimeSpan.FromSeconds( 1 ) )
-				.ToList() )
-			{
-				ThroughputData.Remove( i.Key );
-			}
 		}
 		
 		private short[] ConvertBitsToShorts(byte[] buffer)
@@ -80,6 +84,11 @@ namespace Cinema.Video
 			}
 
 			return samples.ToArray();
+		}
+		
+		public void Update()
+		{
+			UpdateThroughput();
 		}
 		
 		/// <summary>

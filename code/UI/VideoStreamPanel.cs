@@ -95,7 +95,7 @@ namespace Cinema.UI
 				builder.AppendLine( $"Current frame: {Player.CurrentFrame}" );
 				builder.AppendLine( $"Is playing: {Player.IsPlaying}" );
 				builder.AppendLine( $"Is streaming: {Player.IsStreaming}" );
-				builder.AppendLine( $"Is buffering: {Player.IsBuffering || !Player.IsReady()}" );
+				builder.AppendLine( $"Is buffering: {Player.IsBuffering || (!Player.IsPlaying && !Player.IsReady())}" );
 				builder.AppendLine();
 				
 				builder.AppendLine( "--------STATS--------" );

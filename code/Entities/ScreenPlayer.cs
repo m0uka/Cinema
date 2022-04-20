@@ -88,6 +88,7 @@ namespace Cinema.Entities
 		private void UpdateFrames()
 		{
 			Player?.UpdateFrames();
+			Receiver?.Update();
 		}
 
 		[ClientRpc]
