@@ -31,9 +31,8 @@ namespace Cinema.Video
 		
 		private double LastFrame { get; set; }
 		
-		public TimeSince PlaybackStart { get; set; }
-		public TimeSince? StartFrom { get; set; } = null;
-		
+		public Stopwatch PlaybackStopwatch { get; set; }
+
 		public VideoData VideoData { get; set; }
 		public VideoProgress VideoProgress { get; set; }
 		
@@ -44,6 +43,8 @@ namespace Cinema.Video
 		
 		private float BufferStart { get; set; }
 		private float TimeBuffering { get; set; }
+
+		public List<short[]> SoundSamplesPrecache { get; set; } = new();
 
 		public VideoPlayer()
 		{
@@ -74,6 +75,7 @@ namespace Cinema.Video
 		{
 			if ( IsBuffering ) return;
 			
+			PlaybackStopwatch?.Stop();
 			BufferStart = Time.Now;
 			IsBuffering = true;
 
@@ -86,6 +88,8 @@ namespace Cinema.Video
 		{
 			IsBuffering = false;
 			TimeBuffering += (Time.Now - BufferStart);
+			
+			PlaybackStopwatch.Start();
 
 			// PlaybackStart -= (Time.Now - BufferStart);
 		}
@@ -110,7 +114,7 @@ namespace Cinema.Video
 					IsPlaying = false;
 				}
 
-				// Buffer();
+				// Buffer(5);
 				return;
 			}
 
@@ -126,12 +130,14 @@ namespace Cinema.Video
 
 			double realDuration = VideoData.FrameCount * frameRateFraction;
 			double realProgress = playbackProgress * realDuration;
+			
+			var elapsed = PlaybackStopwatch.Elapsed;
 
-			double diff = Math.Abs(realProgress - PlaybackStart);
+			double diff = Math.Abs(realProgress - elapsed.TotalSeconds);
 			float multiplier = diff > 1 ? 10 : 1;
 
 			// We are running too slow or fast!
-			FrameDesyncCorrectValue = (realProgress - PlaybackStart) * multiplier;
+			FrameDesyncCorrectValue = (realProgress - elapsed.TotalSeconds) * multiplier;
 		}
 
 		private void PlayFrame( int frame )
@@ -140,11 +146,9 @@ namespace Cinema.Video
 			{
 				ActiveTexture = textureFrame;
 			}
-			else
-			{
-				var frameData = Frames[CurrentFrame];
-				SetFrame( frameData );
-			}
+			
+			var frameData = Frames[CurrentFrame];
+			SetFrame( frameData );
 		}
 
 		private void SetFrame(byte[] data)
@@ -161,21 +165,22 @@ namespace Cinema.Video
 			ActiveTexture = texture;
 		}
 
-		public async void Play()
+		public void Play()
 		{
 			IsPlaying = true;
 			IsStreaming = true;
 
-			PlaybackStart = StartFrom ?? 0;
+			PlaybackStopwatch = new Stopwatch();
+			PlaybackStopwatch.Start();
 			CurrentFrame = 0;
 		}
 
 		public void Ready()
 		{
-			InitSoundStream();
-			
-			ReadyToStart = true;
 			Frames.Clear();
+			
+			InitSoundStream();
+			ReadyToStart = true;
 		}
 
 		private void InitSoundStream()
@@ -197,11 +202,16 @@ namespace Cinema.Video
 			IsPlaying = false;
 		}
 
+		public bool IsReady()
+		{
+			return ReadyToStart && ( ((double) Frames.Count / VideoData.FrameCount) > 0.2f || Frames.Count > 200);
+		}
+
 		public void AddFrame( byte[] frame )
 		{
 			Frames.Add( frame );
 			
-			if ( ReadyToStart )
+			if ( IsReady() )
 			{
 				Play();
 				ReadyToStart = false;
@@ -210,7 +220,23 @@ namespace Cinema.Video
 
 		public void AddSoundSample( short[] soundData )
 		{
-			SoundStream.WriteData( soundData );
+			if ( !IsPlaying )
+			{
+				SoundSamplesPrecache.Add( soundData );
+			}
+			else
+			{
+				if ( SoundSamplesPrecache.Count != 0 )
+				{
+					foreach ( var sample in SoundSamplesPrecache )
+					{
+						SoundStream.WriteData(sample);
+					}
+					
+					SoundSamplesPrecache.Clear();
+				}
+				SoundStream.WriteData( soundData );
+			}
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Cinema.Video
 {
 	public class VideoReceiver
 	{
-		public string WebsocketUri { get; } = "ws://m0uka.dev:8880";
+		public string WebsocketUri { get; } = "ws://localhost:8880";
 		
 		public Action<string[]> MessageReceived { get; set; }
 		public Action<string> StreamSuccess { get; set; }
@@ -111,7 +111,6 @@ namespace Cinema.Video
 
 			bool activeFragment = false;
 			List<byte[]> frameFragments = new List<byte[]>();
-			
 			
 			WebSocket.OnDataReceived += (data) =>
 			{
@@ -217,7 +216,7 @@ namespace Cinema.Video
 					WebSocket = new WebSocket();
 					await WebSocket.Connect( WebsocketUri );
 				}
-				catch ( Exception e )
+				catch ( Exception )
 				{
 					// ignored
 				}
