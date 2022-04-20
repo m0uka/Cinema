@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -10,7 +11,8 @@ using Sandbox.UI;
 
 namespace Cinema.Entities
 {
-	[Library("cinema_screen")]
+	[Library("cinema_screenplayer")]
+	[Display( Name= "Cinema Screen Player" )]
 	[Hammer.Model]
 	public partial class ScreenPlayer : ModelEntity, IPlayable
 	{
@@ -24,7 +26,7 @@ namespace Cinema.Entities
 		public ScreenPlayer()
 		{
 			SetupPhysicsFromModel( PhysicsMotionType.Static );
-			
+
 			if ( IsClient )
 			{
 				InitializePlayer();
@@ -48,6 +50,7 @@ namespace Cinema.Entities
 			Player = new VideoPlayer( this );
 
 			await Task.Delay( 1000 );
+			
 			SceneObject.Attributes.Set("tint", Color.White);
 
 			VideoStreamPanel.Instance.Player = Player;
@@ -56,11 +59,24 @@ namespace Cinema.Entities
 
 		private async void InitializeServerReceiver()
 		{
-			Receiver = new VideoReceiver( (id) =>
+			Receiver = new VideoReceiver( async (id) =>
 			{
 				VideoId = id;
 				VideoStart = 0;
 				IsVideoPlaying = true;
+				
+				foreach ( var player in Client.All )
+				{
+					try
+					{
+						await GameServices.SubmitScore( player.PlayerId, 1 );
+					}
+					catch ( Exception e )
+					{
+						Log.Warning($"Failed to submit score to backend, error: {e.Message}");
+					}
+				}
+
 				Play( id );
 			}, OnVideoProgress );
 			
