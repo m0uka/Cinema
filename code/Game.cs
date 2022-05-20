@@ -20,7 +20,7 @@ namespace Cinema
 			}
 		}
 		
-		[ServerCmd("request_video")]
+		[ConCmd.Server("request_video")]
 		public static void RequestVideo( int playable, string url )
 		{
 			// var ent = FindByIndex( playable );
@@ -37,6 +37,7 @@ namespace Cinema
 		{
 			base.PostLevelLoaded();
 			
+			GameServices.StartGame();
 			CreateScreenPlayers();
 		}
 

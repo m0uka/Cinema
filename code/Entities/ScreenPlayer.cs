@@ -13,7 +13,7 @@ namespace Cinema.Entities
 {
 	[Library("cinema_screenplayer")]
 	[Display( Name= "Cinema Screen Player" )]
-	[Hammer.Model]
+	[SandboxEditor.Model]
 	public partial class ScreenPlayer : ModelEntity, IPlayable
 	{
 		public VideoPlayer Player { get; set; }
